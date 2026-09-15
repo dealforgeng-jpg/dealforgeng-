@@ -2,24 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FF6B2B">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+
   <title>DealForge NG — Deals Worth Knowing</title>
   <meta name="description" content="Discover interesting gadgets, tech products, smart finds and deals with DealForge NG. We find it. You decide.">
+  <link rel="canonical" href="https://dealforge.ng/">
 
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DealForge NG">
   <meta property="og:title" content="DealForge NG — Deals Worth Knowing">
-  <meta property="og:description" content="Discover interesting gadgets, tech products, smart finds and deals with DealForge NG. We find it. You decide.">
-  <meta property="og:url" content="https://dealforge.ng">
+  <meta property="og:description" content="We find it. You decide. Product discovery and smart finds curated for Nigeria.">
+  <meta property="og:url" content="https://dealforge.ng/">
+  <meta property="og:locale" content="en_NG">
+
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DealForge NG — Deals Worth Knowing">
   <meta name="twitter:description" content="We find it. You decide.">
-  <meta name="theme-color" content="#FF6B2B">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "DealForge NG",
+    "url": "https://dealforge.ng/",
+    "description": "Product discovery and deal curation for Nigeria. We find it. You decide.",
+    "inLanguage": "en-NG"
+  }
+  </script>
+
   <style>
+    /* ============================================================
+       DEALFORGE NG — Inline Styles
+       ============================================================ */
+
+    /* ---------- RESET ---------- */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -29,6 +52,7 @@
       --orange-dark: #E85A1C;
       --white: #FFFFFF;
       --bg-light: #F6F6F4;
+      --border-soft: #E2E2E0;
       --text-secondary: #707070;
 
       --radius-card: 18px;
@@ -40,12 +64,14 @@
 
       --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+
+      --bottom-nav-h: 68px;
     }
 
     html {
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
-      scroll-padding-top: 80px;
+      scroll-padding-top: 84px;
     }
 
     body {
@@ -56,16 +82,37 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
+    }
+
+    @media (min-width: 768px) {
+      body { padding-bottom: 0; }
     }
 
     img { max-width: 100%; display: block; height: auto; }
     a { text-decoration: none; color: inherit; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
     ul { list-style: none; }
+    input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-light); }
-    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #cfcfcf; border-radius: 10px; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 12px;
+      background: var(--charcoal); color: var(--white);
+      padding: 10px 16px; border-radius: 10px;
+      font-weight: 600; font-size: 0.85rem; z-index: 3000;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 12px; }
 
     .container {
       width: 100%;
@@ -74,11 +121,21 @@
       padding: 0 20px;
     }
 
-    /* ============ HEADER ============ */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--orange);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      position: sticky; top: 0; z-index: 1000;
       background: rgba(255,255,255,0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -95,6 +152,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
+      gap: 12px;
     }
 
     .logo {
@@ -102,9 +160,10 @@
       font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--charcoal);
-      display: flex;
+      display: inline-flex;
       align-items: baseline;
       gap: 1px;
+      flex-shrink: 0;
     }
     .logo span { color: var(--orange); }
 
@@ -120,10 +179,8 @@
     .desktop-nav a::after {
       content: '';
       position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
       background: var(--orange);
       transition: width var(--transition);
     }
@@ -140,6 +197,7 @@
       font-size: 0.85rem;
       transition: all var(--transition);
       box-shadow: var(--shadow-orange);
+      white-space: nowrap;
     }
     .desktop-cta:hover {
       background: var(--orange-dark);
@@ -148,18 +206,17 @@
     }
 
     .mobile-menu-btn {
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 10px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 1100;
-      min-width: 44px;
-      min-height: 44px;
       align-items: center;
       justify-content: center;
+      gap: 5px;
+      padding: 10px;
+      min-width: 44px;
+      min-height: 44px;
+      background: none;
+      border: none;
+      z-index: 1100;
     }
     .mobile-menu-btn span {
       display: block;
@@ -167,17 +224,19 @@
       height: 2px;
       background: var(--charcoal);
       border-radius: 2px;
-      transition: all var(--transition);
+      transition: transform var(--transition), opacity var(--transition);
     }
-    .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
-    .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu-btn[aria-expanded="true"] span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .mobile-menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .mobile-menu-btn[aria-expanded="true"] span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
 
     .mobile-nav {
       position: fixed;
-      top: 62px;
-      left: 0;
-      right: 0;
+      top: 62px; left: 0; right: 0;
       background: var(--white);
       padding: 16px 20px 24px;
       display: flex;
@@ -188,9 +247,10 @@
       z-index: 999;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       box-shadow: var(--shadow-lg);
-      max-height: calc(100vh - 62px);
+      max-height: calc(100dvh - 62px);
       overflow-y: auto;
     }
+    .mobile-nav[hidden] { display: none; }
     .mobile-nav.open { transform: translateY(0); }
     .mobile-nav a {
       padding: 14px 16px;
@@ -200,7 +260,8 @@
       border-radius: 12px;
       transition: background var(--transition);
     }
-    .mobile-nav a:hover, .mobile-nav a:active { background: var(--bg-light); }
+    .mobile-nav a:hover,
+    .mobile-nav a:active { background: var(--bg-light); }
     .mobile-nav .mobile-cta {
       background: var(--orange);
       color: var(--white);
@@ -210,7 +271,9 @@
       box-shadow: var(--shadow-orange);
     }
 
-    /* ============ HERO ============ */
+    /* ============================================================
+       HERO
+       ============================================================ */
     .hero {
       padding: 40px 0 56px;
       background: linear-gradient(165deg, #FAFAF8 0%, #FFFFFF 100%);
@@ -220,15 +283,18 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -120px;
-      right: -120px;
-      width: 340px;
-      height: 340px;
+      top: -120px; right: -120px;
+      width: 340px; height: 340px;
       background: radial-gradient(circle, rgba(255,107,43,0.09) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
-    .hero .container { display: flex; flex-direction: column; gap: 40px; position: relative; }
+    .hero .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      position: relative;
+    }
     .hero-content { max-width: 620px; }
 
     .hero-badge {
@@ -243,6 +309,7 @@
       border-radius: var(--radius-pill);
       margin-bottom: 18px;
     }
+
     .hero h1 {
       font-size: clamp(2rem, 9vw, 3.75rem);
       font-weight: 800;
@@ -252,13 +319,15 @@
       margin-bottom: 18px;
     }
     .hero h1 .highlight { color: var(--orange); }
-    .hero p {
+
+    .hero-lead {
       font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       max-width: 500px;
     }
+
     .hero-tagline {
       display: inline-block;
       font-size: 0.8rem;
@@ -270,6 +339,7 @@
       padding-left: 12px;
       margin-bottom: 28px;
     }
+
     .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
     .btn {
@@ -281,9 +351,8 @@
       border-radius: var(--radius-pill);
       font-weight: 600;
       font-size: 0.92rem;
-      transition: all var(--transition);
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition), border-color var(--transition);
       min-height: 48px;
-      touch-action: manipulation;
       border: 1.5px solid transparent;
     }
     .btn-primary {
@@ -299,7 +368,7 @@
     .btn-secondary {
       background: var(--white);
       color: var(--charcoal);
-      border-color: #E2E2E0;
+      border-color: var(--border-soft);
     }
     .btn-secondary:hover, .btn-secondary:active {
       border-color: var(--charcoal);
@@ -320,7 +389,6 @@
       gap: 12px;
       width: 100%;
       max-width: 380px;
-      position: relative;
     }
     .float-card {
       background: var(--white);
@@ -343,8 +411,17 @@
     }
 
     .float-card-icon { font-size: 1.7rem; line-height: 1; }
-    .float-card-title { font-size: 0.72rem; font-weight: 700; color: var(--charcoal); line-height: 1.2; }
-    .float-card-price { font-size: 0.78rem; font-weight: 800; color: var(--orange); }
+    .float-card-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.2;
+    }
+    .float-card-price {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--orange);
+    }
     .float-card-tag {
       font-size: 0.55rem;
       font-weight: 700;
@@ -357,7 +434,9 @@
       align-self: flex-start;
     }
 
-    /* ============ SECTIONS ============ */
+    /* ============================================================
+       SECTION HEADERS
+       ============================================================ */
     .section-header { margin-bottom: 28px; }
     .section-header h2 {
       font-size: clamp(1.5rem, 5.5vw, 2.1rem);
@@ -372,35 +451,52 @@
       max-width: 560px;
     }
 
-    /* ============ SEARCH & FILTERS ============ */
+    /* ============================================================
+       SEARCH & FILTERS
+       ============================================================ */
     .search-section { padding: 0 0 32px; }
     .search-bar { position: relative; margin-bottom: 16px; }
     .search-bar input {
       width: 100%;
-      padding: 16px 20px 16px 48px;
+      padding: 16px 52px 16px 48px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid #E2E2E0;
+      border: 1.5px solid var(--border-soft);
       font-size: 0.95rem;
-      font-family: inherit;
       background: var(--white);
       transition: border-color var(--transition), box-shadow var(--transition);
       -webkit-appearance: none;
+      appearance: none;
     }
+    .search-bar input::-webkit-search-cancel-button { display: none; }
     .search-bar input:focus {
       outline: none;
       border-color: var(--orange);
       box-shadow: 0 0 0 4px rgba(255,107,43,0.1);
     }
     .search-bar input::placeholder { color: #9ca3af; }
+
     .search-icon {
       position: absolute;
-      left: 18px;
-      top: 50%;
+      left: 18px; top: 50%;
       transform: translateY(-50%);
       color: var(--text-secondary);
       font-size: 1rem;
       pointer-events: none;
     }
+    .search-clear {
+      position: absolute;
+      right: 8px; top: 50%;
+      transform: translateY(-50%);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: background var(--transition);
+    }
+    .search-clear:hover { background: var(--bg-light); color: var(--charcoal); }
 
     .filter-chips {
       display: flex;
@@ -416,7 +512,7 @@
       flex-shrink: 0;
       padding: 8px 18px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid #E2E2E0;
+      border: 1.5px solid var(--border-soft);
       background: var(--white);
       font-size: 0.8rem;
       font-weight: 600;
@@ -424,7 +520,6 @@
       transition: all var(--transition);
       white-space: nowrap;
       min-height: 38px;
-      touch-action: manipulation;
     }
     .filter-chip:hover, .filter-chip:active {
       border-color: var(--charcoal);
@@ -436,13 +531,16 @@
       border-color: var(--charcoal);
     }
 
-    /* ============ PRODUCT GRID ============ */
+    /* ============================================================
+       PRODUCT GRID
+       ============================================================ */
     .products-section { padding: 0 0 48px; }
     .product-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
     }
+
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -457,7 +555,6 @@
       margin-bottom: 6px;
     }
 
-    /* ============ PRODUCT CARD ============ */
     .product-card {
       background: var(--white);
       border-radius: var(--radius-card);
@@ -483,8 +580,7 @@
       justify-content: center;
     }
     .card-image-wrap img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
@@ -497,8 +593,7 @@
 
     .card-badge {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 12px; left: 12px;
       background: var(--orange);
       color: var(--white);
       font-size: 0.62rem;
@@ -547,6 +642,7 @@
       gap: 6px;
       font-size: 0.78rem;
       color: var(--text-secondary);
+      flex-wrap: wrap;
     }
     .card-rating .stars { color: #F59E0B; font-size: 0.82rem; }
 
@@ -599,7 +695,6 @@
       font-size: 0.85rem;
       transition: all var(--transition);
       min-height: 44px;
-      touch-action: manipulation;
       border: none;
       width: 100%;
     }
@@ -609,10 +704,10 @@
       box-shadow: var(--shadow-orange);
     }
 
-    /* ============ TRANSPARENCY ============ */
-    .transparency-section {
-      padding: 0 0 40px;
-    }
+    /* ============================================================
+       TRANSPARENCY
+       ============================================================ */
+    .transparency-section { padding: 0 0 40px; }
     .transparency-box {
       background: var(--bg-light);
       border-radius: var(--radius-card);
@@ -622,11 +717,7 @@
       gap: 14px;
       border: 1px solid rgba(0,0,0,0.04);
     }
-    .transparency-icon {
-      font-size: 1.4rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
+    .transparency-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
     .transparency-text {
       font-size: 0.82rem;
       color: var(--text-secondary);
@@ -634,14 +725,16 @@
     }
     .transparency-text strong { color: var(--charcoal); font-weight: 700; }
 
-    /* ============ CATEGORIES ============ */
+    /* ============================================================
+       CATEGORIES
+       ============================================================ */
     .categories-section {
       padding: 48px 0;
       background: var(--bg-light);
     }
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
     .category-card {
@@ -651,10 +744,9 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      transition: transform var(--transition), box-shadow var(--transition);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
       cursor: pointer;
       border: 1px solid rgba(0,0,0,0.04);
-      touch-action: manipulation;
       min-height: 120px;
       text-align: left;
     }
@@ -676,7 +768,9 @@
       line-height: 1.35;
     }
 
-    /* ============ WHY DEALFORGE ============ */
+    /* ============================================================
+       WHY DEALFORGE
+       ============================================================ */
     .why-section { padding: 48px 0; }
     .why-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .why-card {
@@ -696,9 +790,15 @@
       color: var(--charcoal);
       letter-spacing: -0.2px;
     }
-    .why-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+    .why-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
 
-    /* ============ HOW IT WORKS ============ */
+    /* ============================================================
+       HOW IT WORKS
+       ============================================================ */
     .how-section {
       padding: 56px 0;
       background: var(--charcoal);
@@ -725,21 +825,14 @@
       color: var(--orange);
       line-height: 1;
       margin-bottom: 14px;
-      opacity: 0.95;
       letter-spacing: -1px;
     }
     .how-step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
     .how-step p { font-size: 0.9rem; color: rgba(255,255,255,0.72); line-height: 1.55; }
-    .how-headline {
-      text-align: center;
-      font-size: clamp(1.3rem, 4.5vw, 1.7rem);
-      font-weight: 700;
-      margin-top: 36px;
-      color: var(--white);
-      letter-spacing: -0.6px;
-    }
 
-    /* ============ COMMUNITY ============ */
+    /* ============================================================
+       COMMUNITY
+       ============================================================ */
     .community-section { padding: 56px 0; }
     .community-card {
       background: linear-gradient(135deg, #FFF6F1 0%, #FFFFFF 100%);
@@ -777,9 +870,8 @@
       border-radius: var(--radius-pill);
       font-weight: 600;
       font-size: 0.9rem;
-      transition: all var(--transition);
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
       min-height: 48px;
-      touch-action: manipulation;
       width: 100%;
       color: var(--white);
     }
@@ -794,7 +886,9 @@
       filter: brightness(1.05);
     }
 
-    /* ============ EMAIL ============ */
+    /* ============================================================
+       EMAIL
+       ============================================================ */
     .email-section { padding: 0 0 56px; }
     .email-card {
       background: var(--bg-light);
@@ -824,13 +918,13 @@
     .email-form input {
       padding: 14px 20px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid #E2E2E0;
+      border: 1.5px solid var(--border-soft);
       font-size: 0.9rem;
-      font-family: inherit;
       background: var(--white);
       transition: border-color var(--transition), box-shadow var(--transition);
       min-height: 48px;
       -webkit-appearance: none;
+      appearance: none;
     }
     .email-form input:focus {
       outline: none;
@@ -844,15 +938,19 @@
       color: var(--white);
       font-weight: 600;
       font-size: 0.9rem;
-      transition: all var(--transition);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
       min-height: 48px;
-      touch-action: manipulation;
       box-shadow: var(--shadow-orange);
     }
     .email-form button:hover, .email-form button:active {
       background: var(--orange-dark);
       transform: translateY(-1px);
       box-shadow: 0 8px 24px rgba(255,107,43,0.42);
+    }
+    .email-form button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
     }
     .email-note {
       font-size: 0.72rem;
@@ -861,18 +959,23 @@
       opacity: 0.85;
       display: block;
     }
+    .email-note.success { color: #0E9F6E; opacity: 1; font-weight: 600; }
+    .email-note.error { color: #DC2626; opacity: 1; font-weight: 600; }
 
-    /* ============ FOOTER ============ */
+    /* ============================================================
+       FOOTER
+       ============================================================ */
     .site-footer {
       background: var(--charcoal);
       color: rgba(255,255,255,0.72);
-      padding: 56px 0 120px;
+      padding: 56px 0 96px;
     }
     .footer-brand { margin-bottom: 32px; }
     .footer-brand .logo {
       color: var(--white);
       margin-bottom: 10px;
       font-size: 1.3rem;
+      display: inline-flex;
     }
     .footer-tagline {
       font-size: 0.85rem;
@@ -909,11 +1012,10 @@
       margin-bottom: 32px;
     }
     .footer-social a {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: rgba(255,255,255,0.08);
       color: var(--white);
@@ -935,12 +1037,12 @@
     .footer-disclaimer p { margin-bottom: 10px; }
     .footer-disclaimer p:last-child { margin-bottom: 0; }
 
-    /* ============ MOBILE BOTTOM NAV ============ */
+    /* ============================================================
+       MOBILE BOTTOM NAV
+       ============================================================ */
     .mobile-bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       background: rgba(255,255,255,0.97);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -949,7 +1051,7 @@
       justify-content: space-around;
       align-items: center;
       padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
-      z-index: 1000;
+      z-index: 900;
     }
     .mobile-bottom-nav a {
       display: flex;
@@ -963,13 +1065,14 @@
       transition: color var(--transition);
       min-width: 60px;
       min-height: 44px;
-      touch-action: manipulation;
     }
     .mobile-bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
     .mobile-bottom-nav a.active,
     .mobile-bottom-nav a:hover { color: var(--orange); }
 
-    /* ============ MODAL ============ */
+    /* ============================================================
+       MODAL
+       ============================================================ */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -985,38 +1088,37 @@
       transition: opacity 0.3s ease;
     }
     .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-overlay[hidden] { display: none; }
 
     .modal-content {
       background: var(--white);
       border-radius: 24px 24px 0 0;
       width: 100%;
       max-width: 640px;
-      max-height: 92vh;
+      max-height: 92dvh;
       overflow-y: auto;
       padding: 20px 20px 32px;
       transform: translateY(100%);
       transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
       -webkit-overflow-scrolling: touch;
       position: relative;
+      padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
     }
     .modal-overlay.open .modal-content { transform: translateY(0); }
 
     .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 38px;
-      height: 38px;
+      top: 16px; right: 16px;
+      width: 38px; height: 38px;
       border-radius: 50%;
       background: var(--bg-light);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 1.1rem;
       color: var(--charcoal);
       transition: background var(--transition);
       z-index: 10;
-      touch-action: manipulation;
     }
     .modal-close:hover { background: #e6e6e6; }
 
@@ -1033,11 +1135,7 @@
       margin-bottom: 22px;
       overflow: hidden;
     }
-    .modal-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .modal-image img { width: 100%; height: 100%; object-fit: cover; }
 
     .modal-category {
       font-size: 0.72rem;
@@ -1062,6 +1160,7 @@
       font-size: 0.85rem;
       color: var(--text-secondary);
       margin-bottom: 16px;
+      flex-wrap: wrap;
     }
     .modal-rating .stars { color: #F59E0B; }
 
@@ -1123,10 +1222,8 @@
     .modal-section ul li::before {
       content: '';
       position: absolute;
-      left: 4px;
-      top: 9px;
-      width: 6px;
-      height: 6px;
+      left: 4px; top: 9px;
+      width: 6px; height: 6px;
       background: var(--orange);
       border-radius: 50%;
     }
@@ -1143,9 +1240,8 @@
       border-radius: var(--radius-pill);
       font-weight: 700;
       font-size: 0.98rem;
-      transition: all var(--transition);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
       min-height: 52px;
-      touch-action: manipulation;
       margin-top: 8px;
       box-shadow: var(--shadow-orange);
     }
@@ -1174,6 +1270,7 @@
       background: #FAFAF8;
       border-top: 1px solid rgba(0,0,0,0.05);
     }
+
     .agent-shell {
       background: var(--charcoal);
       color: var(--white);
@@ -1186,14 +1283,17 @@
     .agent-shell::before {
       content: '';
       position: absolute;
-      width: 300px;
-      height: 300px;
-      right: -120px;
-      top: -130px;
+      width: 300px; height: 300px;
+      right: -120px; top: -130px;
       background: radial-gradient(circle, rgba(255,107,43,0.22) 0%, transparent 70%);
       pointer-events: none;
     }
-    .agent-header { position: relative; z-index: 1; margin-bottom: 28px; }
+
+    .agent-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 28px;
+    }
     .agent-label {
       display: inline-flex;
       align-items: center;
@@ -1221,6 +1321,12 @@
       max-width: 620px;
       line-height: 1.6;
     }
+    .agent-note {
+      margin-top: 8px;
+      font-size: 0.75rem !important;
+      color: rgba(255,255,255,0.45) !important;
+    }
+
     .agent-grid {
       position: relative;
       z-index: 1;
@@ -1228,6 +1334,7 @@
       grid-template-columns: 1fr;
       gap: 18px;
     }
+
     .agent-panel {
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.09);
@@ -1239,6 +1346,7 @@
       font-size: 0.95rem;
       margin-bottom: 16px;
     }
+
     .agent-input-group { margin-bottom: 14px; }
     .agent-input-group label {
       display: block;
@@ -1258,9 +1366,9 @@
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.08);
       color: var(--white);
-      font-family: inherit;
       font-size: 0.88rem;
       outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
     }
     .agent-input::placeholder { color: rgba(255,255,255,0.35); }
     .agent-input:focus,
@@ -1269,11 +1377,13 @@
       box-shadow: 0 0 0 3px rgba(255,107,43,0.12);
     }
     .agent-select option { color: var(--charcoal); background: var(--white); }
+
     .agent-two-column {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
+
     .agent-run-btn {
       width: 100%;
       min-height: 50px;
@@ -1283,14 +1393,12 @@
       font-weight: 800;
       font-size: 0.9rem;
       box-shadow: var(--shadow-orange);
-      transition: all var(--transition);
+      transition: background var(--transition), transform var(--transition);
       margin-top: 4px;
     }
-    .agent-run-btn:hover {
-      background: var(--orange-dark);
-      transform: translateY(-2px);
-    }
+    .agent-run-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
     .agent-run-btn:disabled { opacity: 0.65; cursor: wait; transform: none; }
+
     .agent-status {
       margin-top: 12px;
       min-height: 20px;
@@ -1298,8 +1406,9 @@
       color: rgba(255,255,255,0.55);
       text-align: center;
     }
-    .agent-results { display: none; }
-    .agent-results.visible { display: block; }
+
+    .agent-results[hidden] { display: none; }
+
     .agent-result-top {
       display: flex;
       align-items: flex-start;
@@ -1307,10 +1416,14 @@
       gap: 12px;
       margin-bottom: 14px;
     }
-    .agent-result-name { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+    .agent-result-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.3;
+      word-break: break-word;
+    }
     .agent-score {
-      min-width: 62px;
-      height: 62px;
+      min-width: 62px; height: 62px;
       border-radius: 50%;
       background: rgba(255,107,43,0.15);
       border: 2px solid var(--orange);
@@ -1322,6 +1435,7 @@
     }
     .agent-score strong { font-size: 1.1rem; line-height: 1; color: var(--orange); }
     .agent-score span { font-size: 0.52rem; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
     .agent-verdict {
       padding: 11px 13px;
       border-radius: 12px;
@@ -1332,9 +1446,10 @@
       margin-bottom: 16px;
     }
     .agent-verdict strong { color: var(--white); }
+
     .agent-metrics {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       margin-bottom: 18px;
     }
@@ -1352,6 +1467,7 @@
       letter-spacing: 0.5px;
     }
     .agent-metric strong { font-size: 0.82rem; color: var(--white); }
+
     .agent-output { margin-top: 16px; }
     .agent-output h4 {
       font-size: 0.68rem;
@@ -1369,6 +1485,7 @@
       line-height: 1.55;
       color: rgba(255,255,255,0.78);
       white-space: pre-wrap;
+      word-break: break-word;
     }
     .agent-actions {
       display: grid;
@@ -1384,7 +1501,7 @@
       border: 1px solid rgba(255,255,255,0.08);
       font-size: 0.72rem;
       font-weight: 700;
-      transition: all var(--transition);
+      transition: background var(--transition);
     }
     .agent-action-btn:hover { background: rgba(255,255,255,0.14); }
     .agent-action-btn.approve {
@@ -1392,9 +1509,9 @@
       color: #6EE7B7;
     }
     .agent-action-btn.approve:hover { background: rgba(16,185,129,0.22); }
+
     .agent-approved {
       margin-top: 12px;
-      display: none;
       padding: 10px 12px;
       border-radius: 10px;
       background: rgba(16,185,129,0.12);
@@ -1402,7 +1519,16 @@
       font-size: 0.72rem;
       font-weight: 700;
     }
-    .agent-approved.show { display: block; }
+    .agent-approved[hidden] { display: none; }
+
+    .agent-empty {
+      text-align: center;
+      padding: 42px 15px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
     .agent-disclaimer {
       position: relative;
       z-index: 1;
@@ -1412,11 +1538,14 @@
       line-height: 1.5;
     }
 
-    /* ============ RESPONSIVE ============ */
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
     @media (min-width: 375px) {
-      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
       .category-grid { gap: 14px; }
     }
+
     @media (min-width: 480px) {
       .social-buttons {
         flex-direction: row;
@@ -1426,63 +1555,65 @@
       }
       .social-btn { width: auto; flex: 1; min-width: 150px; }
     }
+
     @media (min-width: 640px) {
-      .why-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-steps { grid-template-columns: repeat(3, 1fr); }
-      .footer-links { grid-template-columns: repeat(3, 1fr); }
-      .category-grid { grid-template-columns: repeat(3, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .how-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .modal-image { aspect-ratio: 16 / 10; }
     }
+
     @media (min-width: 768px) {
       .header-inner { height: 70px; }
       .desktop-nav { display: flex; }
       .desktop-cta { display: inline-flex; }
       .mobile-menu-btn { display: none; }
-      .mobile-nav { display: none; }
+      .mobile-nav { display: none !important; }
       .mobile-bottom-nav { display: none; }
-      .site-footer { padding-bottom: 56px; }
+
       .hero { padding: 70px 0 90px; }
-      .hero .container { flex-direction: row; align-items: center; gap: 60px; }
+      .hero .container {
+        flex-direction: row;
+        align-items: center;
+        gap: 60px;
+      }
       .hero-content { flex: 1; }
       .hero-visual { flex: 1; min-height: 340px; }
       .floating-cards { max-width: 420px; }
       .float-card { padding: 18px; }
-      .product-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
-      .category-grid { grid-template-columns: repeat(6, 1fr); }
-      .why-grid { grid-template-columns: repeat(4, 1fr); }
+
+      .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+      .category-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .why-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
       .modal-overlay { align-items: center; padding: 20px; }
       .modal-content {
         border-radius: 24px;
-        max-height: 88vh;
+        max-height: 88dvh;
         padding: 28px 28px 36px;
       }
+
       .email-form { flex-direction: row; }
       .email-form input { flex: 1; }
       .email-form button { flex-shrink: 0; width: auto; padding: 14px 28px; }
+
       .agent-shell { padding: 38px; }
       .agent-grid {
         grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1.2fr);
       }
     }
+
     @media (min-width: 1024px) {
-      .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
       .hero h1 { font-size: 3.75rem; }
-      .hero p { font-size: 1.12rem; }
+      .hero-lead { font-size: 1.12rem; }
       .agent-shell { padding: 44px; }
     }
+
     @media (min-width: 1440px) {
       .container { max-width: 1280px; }
-      .product-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
-      .hero h1 { font-size: 4.2rem; }
     }
-
-    /* ============ ANIMATIONS ============ */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in-up { animation: fadeInUp 0.7s ease forwards; opacity: 0; }
-    .fade-in-up-delay-2 { animation-delay: 0.2s; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1494,20 +1625,21 @@
       .float-card { animation: none; }
     }
 
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-      outline: 2px solid var(--orange);
-      outline-offset: 2px;
-    }
+    body.modal-open { overflow: hidden; }
   </style>
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- ============ HEADER ============ -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="#" class="logo" aria-label="DealForge NG home">DealForge<span>NG</span></a>
+      <a href="#top" class="logo" aria-label="DealForge NG home">
+        DealForge<span>NG</span>
+      </a>
 
-      <nav class="desktop-nav" aria-label="Main navigation">
+      <nav class="desktop-nav" aria-label="Primary">
         <a href="#deals">Deals</a>
         <a href="#categories">Categories</a>
         <a href="#how-it-works">How It Works</a>
@@ -1516,12 +1648,13 @@
 
       <a href="#deals" class="desktop-cta">Explore Deals</a>
 
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" type="button"
+              aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
         <span></span><span></span><span></span>
       </button>
     </div>
 
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
       <a href="#deals">Deals</a>
       <a href="#categories">Categories</a>
       <a href="#how-it-works">How It Works</a>
@@ -1530,22 +1663,25 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
+
     <!-- ============ HERO ============ -->
-    <section class="hero" aria-labelledby="hero-heading">
+    <section class="hero" id="top" aria-labelledby="hero-heading">
       <div class="container">
-        <div class="hero-content fade-in-up">
-          <div class="hero-badge">Product Discovery</div>
+        <div class="hero-content">
+          <span class="hero-badge">Product Discovery</span>
           <h1 id="hero-heading">Deals worth <span class="highlight">knowing.</span></h1>
-          <p>Discover interesting products, useful gadgets and deals worth checking out — without endlessly searching.</p>
-          <div class="hero-tagline">We find it. You decide.</div>
+          <p class="hero-lead">
+            Discover interesting products, useful gadgets and deals worth checking out — without endlessly searching.
+          </p>
+          <p class="hero-tagline">We find it. You decide.</p>
           <div class="hero-ctas">
             <a href="#deals" class="btn btn-primary">Explore Today's Deals</a>
             <a href="#community" class="btn btn-secondary">Join Our Community</a>
           </div>
         </div>
 
-        <div class="hero-visual fade-in-up fade-in-up-delay-2" aria-hidden="true">
+        <div class="hero-visual" aria-hidden="true">
           <div class="floating-cards">
             <div class="float-card">
               <div class="float-card-icon">🔋</div>
@@ -1581,16 +1717,18 @@
       <div class="container">
         <div class="search-bar">
           <span class="search-icon" aria-hidden="true">🔍</span>
-          <input type="search" id="searchInput" placeholder="Search products, gadgets and deals…" aria-label="Search products">
+          <input type="search" id="searchInput" placeholder="Search products, gadgets and deals…"
+                 aria-label="Search products" autocomplete="off">
+          <button type="button" class="search-clear" id="searchClear" aria-label="Clear search" hidden>✕</button>
         </div>
-        <div class="filter-chips" role="group" aria-label="Filter products by category">
-          <button class="filter-chip active" data-filter="all">All</button>
-          <button class="filter-chip" data-filter="Tech &amp; Gadgets">Tech &amp; Gadgets</button>
-          <button class="filter-chip" data-filter="Audio">Audio</button>
-          <button class="filter-chip" data-filter="Home">Home</button>
-          <button class="filter-chip" data-filter="Work &amp; Study">Work &amp; Study</button>
-          <button class="filter-chip" data-filter="Trending">Trending</button>
-          <button class="filter-chip" data-filter="Smart Finds">Smart Finds</button>
+        <div class="filter-chips" role="group" aria-label="Filter by category" id="filterChips">
+          <button class="filter-chip active" type="button" data-filter="all">All</button>
+          <button class="filter-chip" type="button" data-filter="Tech & Gadgets">Tech &amp; Gadgets</button>
+          <button class="filter-chip" type="button" data-filter="Audio">Audio</button>
+          <button class="filter-chip" type="button" data-filter="Home">Home</button>
+          <button class="filter-chip" type="button" data-filter="Work & Study">Work &amp; Study</button>
+          <button class="filter-chip" type="button" data-filter="Trending">Trending</button>
+          <button class="filter-chip" type="button" data-filter="Smart Finds">Smart Finds</button>
         </div>
       </div>
     </section>
@@ -1599,31 +1737,39 @@
     <section class="agent-section" id="agent" aria-labelledby="agent-heading">
       <div class="container">
         <div class="agent-shell">
-
           <div class="agent-header">
-            <div class="agent-label">🤖 DealForge Agent · V1</div>
+            <span class="agent-label">🤖 DealForge Agent · Local V1</span>
             <h2 id="agent-heading">Find the next deal worth knowing.</h2>
-            <p>Give the Agent a product idea and a budget. It will analyze the opportunity, score the find and generate content ready for TikTok or WhatsApp.</p>
+            <p>
+              Enter a product idea, budget and category. The Agent runs a local
+              scoring pass — using the information you provide and any matching
+              product already on this page — then drafts TikTok and WhatsApp copy
+              you can copy and use.
+            </p>
+            <p class="agent-note">
+              This Agent works entirely in your browser. It does not search the
+              internet in real time.
+            </p>
           </div>
 
           <div class="agent-grid">
-
-            <!-- INPUT PANEL -->
             <div class="agent-panel">
               <h3>🔎 Deal Hunter</h3>
 
               <div class="agent-input-group">
-                <label for="agentProduct">Product / Deal</label>
-                <input class="agent-input" id="agentProduct" type="text" placeholder="e.g. wireless earbuds">
+                <label for="agentProduct">Product or deal</label>
+                <input class="agent-input" id="agentProduct" type="text"
+                       placeholder="e.g. wireless earbuds" autocomplete="off">
               </div>
 
               <div class="agent-two-column">
                 <div class="agent-input-group">
-                  <label for="agentBudget">Budget</label>
-                  <input class="agent-input" id="agentBudget" type="number" min="0" placeholder="15000">
+                  <label for="agentBudget">Budget (₦)</label>
+                  <input class="agent-input" id="agentBudget" type="number"
+                         min="0" inputmode="numeric" placeholder="15000">
                 </div>
                 <div class="agent-input-group">
-                  <label for="agentRating">Min Rating</label>
+                  <label for="agentRating">Minimum rating</label>
                   <select class="agent-select" id="agentRating">
                     <option value="0">Any</option>
                     <option value="3">3.0+</option>
@@ -1637,79 +1783,83 @@
               <div class="agent-input-group">
                 <label for="agentCategory">Category</label>
                 <select class="agent-select" id="agentCategory">
-                  <option value="Tech &amp; Gadgets">Tech &amp; Gadgets</option>
+                  <option value="Tech & Gadgets">Tech &amp; Gadgets</option>
                   <option value="Audio">Audio</option>
                   <option value="Home">Home</option>
-                  <option value="Work &amp; Study">Work &amp; Study</option>
+                  <option value="Work & Study">Work &amp; Study</option>
                   <option value="Trending">Trending</option>
                   <option value="Smart Finds">Smart Finds</option>
                 </select>
               </div>
 
               <div class="agent-input-group">
-                <label for="agentAffiliate">Affiliate Link</label>
-                <input class="agent-input" id="agentAffiliate" type="url" placeholder="Paste affiliate link (optional)">
+                <label for="agentAffiliate">Affiliate link (optional)</label>
+                <input class="agent-input" id="agentAffiliate" type="url"
+                       placeholder="https://..." autocomplete="off">
               </div>
 
-              <button class="agent-run-btn" id="runAgentBtn">⚡ Analyze Find</button>
-              <div class="agent-status" id="agentStatus">Ready.</div>
+              <button class="agent-run-btn" id="runAgentBtn" type="button">
+                ⚡ Analyze Find
+              </button>
+
+              <p class="agent-status" id="agentStatus" role="status" aria-live="polite">Ready.</p>
             </div>
 
-            <!-- RESULTS PANEL -->
             <div class="agent-panel">
               <h3>🧠 Agent Analysis</h3>
 
-              <div class="agent-results" id="agentResults">
+              <div class="agent-results" id="agentResults" hidden>
                 <div class="agent-result-top">
-                  <div>
-                    <div class="agent-result-name" id="agentResultName">—</div>
-                  </div>
-                  <div class="agent-score">
+                  <div class="agent-result-name" id="agentResultName">—</div>
+                  <div class="agent-score" aria-label="Deal score">
                     <strong id="agentScore">—</strong>
-                    <span>/ 100</span>
+                    <span>/100</span>
                   </div>
                 </div>
 
-                <div class="agent-verdict" id="agentVerdict">—</div>
+                <p class="agent-verdict" id="agentVerdict">—</p>
 
                 <div class="agent-metrics">
-                  <div class="agent-metric"><span>Usefulness</span><strong id="metricUsefulness">—</strong></div>
-                  <div class="agent-metric"><span>Value</span><strong id="metricValue">—</strong></div>
-                  <div class="agent-metric"><span>Content Potential</span><strong id="metricContent">—</strong></div>
-                  <div class="agent-metric"><span>Risk</span><strong id="metricRisk">—</strong></div>
+                  <div class="agent-metric"><span>Budget fit</span><strong id="metricBudget">—</strong></div>
+                  <div class="agent-metric"><span>Rating</span><strong id="metricRating">—</strong></div>
+                  <div class="agent-metric"><span>Content potential</span><strong id="metricContent">—</strong></div>
+                  <div class="agent-metric"><span>Affiliate link</span><strong id="metricAffiliate">—</strong></div>
                 </div>
 
                 <div class="agent-output">
-                  <h4>TikTok Hook</h4>
+                  <h4>TikTok draft</h4>
                   <div class="agent-copy-box" id="agentTikTok">—</div>
                   <div class="agent-actions">
-                    <button class="agent-action-btn" id="copyTikTok">Copy TikTok</button>
-                    <button class="agent-action-btn approve" id="approveDeal">✓ Approve Find</button>
+                    <button class="agent-action-btn" id="copyTikTok" type="button">Copy TikTok</button>
+                    <button class="agent-action-btn approve" id="approveDeal" type="button">✓ Approve Find</button>
                   </div>
                 </div>
 
                 <div class="agent-output">
-                  <h4>WhatsApp Copy</h4>
+                  <h4>WhatsApp draft</h4>
                   <div class="agent-copy-box" id="agentWhatsApp">—</div>
                   <div class="agent-actions">
-                    <button class="agent-action-btn" id="copyWhatsApp">Copy WhatsApp</button>
+                    <button class="agent-action-btn" id="copyWhatsApp" type="button">Copy WhatsApp</button>
                   </div>
                 </div>
 
-                <div class="agent-approved" id="agentApproved">✓ Find approved and saved in this browser.</div>
+                <p class="agent-approved" id="agentApproved" role="status" aria-live="polite" hidden>
+                  ✓ Saved in this browser.
+                </p>
               </div>
 
-              <div id="agentEmptyState" style="text-align:center;padding:42px 15px;color:rgba(255,255,255,0.38);font-size:0.78rem;line-height:1.6;">
-                Enter a product above and let<br>DealForge analyze the opportunity.
-              </div>
+              <p class="agent-empty" id="agentEmptyState">
+                Enter a product above and let DealForge score the opportunity.
+              </p>
             </div>
-
           </div>
 
-          <div class="agent-disclaimer">
-            DealForge Agent V1 uses the information you provide to produce an analysis and content draft. It does not automatically purchase, publish, message customers or make financial decisions for you. Verify product information and retailer details before publishing.
-          </div>
-
+          <p class="agent-disclaimer">
+            DealForge Agent V1 uses the information you provide to produce a
+            local analysis and content draft. It does not purchase, publish,
+            message customers or make financial decisions for you. Always verify
+            product information and retailer details before publishing or buying.
+          </p>
         </div>
       </div>
     </section>
@@ -1726,12 +1876,16 @@
     </section>
 
     <!-- ============ TRANSPARENCY ============ -->
-    <section class="transparency-section" aria-label="Affiliate disclosure">
+    <section class="transparency-section" id="transparency" aria-label="Affiliate disclosure">
       <div class="container">
         <div class="transparency-box">
           <span class="transparency-icon" aria-hidden="true">🔗</span>
           <p class="transparency-text">
-            <strong>Transparency:</strong> DealForge may earn a commission when you purchase through certain links. This does not affect the price you pay. We discover and highlight products — the actual purchase happens on the retailer's platform.
+            <strong>Transparency:</strong> DealForge may earn a commission when you
+            purchase through certain links. This does not affect the price you pay.
+            We discover and highlight products — the actual purchase happens on the
+            retailer's platform. Prices and availability may change; always confirm
+            details on the retailer's website before buying.
           </p>
         </div>
       </div>
@@ -1745,32 +1899,32 @@
           <p>Find products by what you're looking for.</p>
         </div>
         <div class="category-grid">
-          <button class="category-card" data-category="Tech &amp; Gadgets">
+          <button class="category-card" type="button" data-category="Tech & Gadgets">
             <span class="category-icon">📱</span>
             <span class="category-name">Tech &amp; Gadgets</span>
             <span class="category-desc">Phones, accessories and useful technology.</span>
           </button>
-          <button class="category-card" data-category="Audio">
+          <button class="category-card" type="button" data-category="Audio">
             <span class="category-icon">🎧</span>
             <span class="category-name">Audio</span>
             <span class="category-desc">Earbuds, headphones and speakers.</span>
           </button>
-          <button class="category-card" data-category="Home">
+          <button class="category-card" type="button" data-category="Home">
             <span class="category-icon">🏠</span>
             <span class="category-name">Home</span>
             <span class="category-desc">Useful products for everyday living.</span>
           </button>
-          <button class="category-card" data-category="Work &amp; Study">
+          <button class="category-card" type="button" data-category="Work & Study">
             <span class="category-icon">💻</span>
             <span class="category-name">Work &amp; Study</span>
             <span class="category-desc">Products useful for students and productivity.</span>
           </button>
-          <button class="category-card" data-category="Trending">
+          <button class="category-card" type="button" data-category="Trending">
             <span class="category-icon">🔥</span>
             <span class="category-name">Trending</span>
             <span class="category-desc">Products currently getting attention.</span>
           </button>
-          <button class="category-card" data-category="Smart Finds">
+          <button class="category-card" type="button" data-category="Smart Finds">
             <span class="category-icon">💰</span>
             <span class="category-name">Smart Finds</span>
             <span class="category-desc">Interesting products at attractive prices.</span>
@@ -1845,13 +1999,16 @@
           <h2 id="community-heading">Don't miss the next find.</h2>
           <p>Follow DealForge for new product discoveries, useful finds and deals worth knowing.</p>
           <div class="social-buttons">
-            <a href="https://www.tiktok.com/@dealforge.ng" class="social-btn tiktok" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.tiktok.com/@dealforge.ng" class="social-btn tiktok"
+               target="_blank" rel="noopener noreferrer">
               <span aria-hidden="true">🎵</span> Follow on TikTok
             </a>
-            <a href="https://www.instagram.com/dealforge.ng" class="social-btn instagram" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/dealforge.ng" class="social-btn instagram"
+               target="_blank" rel="noopener noreferrer">
               <span aria-hidden="true">📸</span> Follow on Instagram
             </a>
-            <a href="https://t.me/dealforgeng1" class="social-btn telegram" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/dealforgeng1" class="social-btn telegram"
+               target="_blank" rel="noopener noreferrer">
               <span aria-hidden="true">✈️</span> Join on Telegram
             </a>
           </div>
@@ -1866,21 +2023,25 @@
           <h3 id="email-heading">Get the next interesting find.</h3>
           <p>Stay updated when we discover something worth checking out.</p>
           <form class="email-form" id="emailForm" novalidate>
-            <input type="email" id="emailInput" placeholder="Enter your email" aria-label="Email address">
+            <label class="sr-only" for="emailInput">Email address</label>
+            <input type="email" id="emailInput" placeholder="Enter your email"
+                   autocomplete="email" inputmode="email" required>
             <button type="submit" id="notifyBtn">Notify Me</button>
           </form>
-          <span class="email-note">Demo only — email collection is not connected yet.</span>
+          <p class="email-note" id="emailNote">
+            Demo only — email collection is not connected yet.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="site-footer" id="about">
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-brand">
         <div class="logo">DealForge<span>NG</span></div>
-        <div class="footer-tagline">We find it. You decide.</div>
+        <p class="footer-tagline">We find it. You decide.</p>
       </div>
 
       <div class="footer-links">
@@ -1892,7 +2053,6 @@
         </div>
         <div class="footer-col">
           <h4>Company</h4>
-          <a href="#about">About</a>
           <a href="#transparency">Affiliate Disclosure</a>
           <a href="mailto:hello@dealforge.ng">Contact</a>
         </div>
@@ -1913,33 +2073,49 @@
       <div class="footer-disclaimer">
         <p>DealForge NG may earn a commission when you purchase through certain links. This does not necessarily affect the price you pay. DealForge does not sell or fulfil any products.</p>
         <p>Prices and availability may change. Always confirm the current information on the retailer's website before purchasing.</p>
+        <p>© <span id="year"></span> DealForge NG.</p>
       </div>
     </div>
   </footer>
 
   <!-- ============ MOBILE BOTTOM NAV ============ -->
-  <nav class="mobile-bottom-nav" aria-label="Mobile bottom navigation">
-    <a href="#" class="active" aria-label="Home"><span class="nav-icon" aria-hidden="true">🏠</span><span>Home</span></a>
-    <a href="#deals" aria-label="Deals"><span class="nav-icon" aria-hidden="true">🔥</span><span>Deals</span></a>
-    <a href="#categories" aria-label="Categories"><span class="nav-icon" aria-hidden="true">📂</span><span>Categories</span></a>
-    <a href="#community" aria-label="Community"><span class="nav-icon" aria-hidden="true">💬</span><span>Community</span></a>
+  <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+    <a href="#top" class="active" data-nav="home" aria-label="Home">
+      <span class="nav-icon" aria-hidden="true">🏠</span><span>Home</span>
+    </a>
+    <a href="#deals" data-nav="deals" aria-label="Deals">
+      <span class="nav-icon" aria-hidden="true">🔥</span><span>Deals</span>
+    </a>
+    <a href="#categories" data-nav="categories" aria-label="Categories">
+      <span class="nav-icon" aria-hidden="true">📂</span><span>Categories</span>
+    </a>
+    <a href="#community" data-nav="community" aria-label="Community">
+      <span class="nav-icon" aria-hidden="true">💬</span><span>Community</span>
+    </a>
   </nav>
 
   <!-- ============ MODAL ============ -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true"
+       aria-labelledby="modalTitle" hidden>
     <div class="modal-content" role="document">
-      <button class="modal-close" id="modalClose" aria-label="Close product details">✕</button>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close details">✕</button>
       <div id="modalBody"></div>
     </div>
   </div>
 
   <script>
     /* ============================================================
+       DEALFORGE NG — Inline Script
+       ============================================================ */
+
+    'use strict';
+
+    /* ============================================================
        PRODUCT DATA
        ============================================================ */
-    const products = [
+    var PRODUCTS = [
       {
-        id: 'itel-powerbank',
+        id: 'itel-powerbank-20000',
         name: 'itel 20,000mAh Dual Output Fast Charging Power Bank',
         category: 'Tech & Gadgets',
         image: '',
@@ -1956,14 +2132,14 @@
           'Fast charging',
           '12-month warranty'
         ],
-        whyNoticed: 'High capacity power bank with strong verified ratings and a 12-month warranty — useful for daily commuting, travel or power outages.',
-        considerations: 'Check the retailer listing for current price, availability and warranty details.',
+        whyNoticed: 'High capacity power bank with strong verified ratings and a 12-month warranty — useful for commuting, travel or power outages.',
+        considerations: 'Check the retailer listing for the current price, availability and warranty details.',
         badge: '🔥 TRENDING',
         badgeClass: 'badge-trending',
         affiliateUrl: 'https://www.jumia.com.ng/itel-20000mah-dual-output-fast-charging-power-bank-98332547.html?utm_source=social&utm_medium=pdpshare'
       },
       {
-        id: 'oipetluck-earbuds',
+        id: 'oipetluck-earhook-earbuds',
         name: 'OIPETLUCK Earhook Earbuds',
         category: 'Audio',
         image: '',
@@ -1977,7 +2153,7 @@
         features: [
           'Bluetooth earbuds',
           'Earhook design',
-          'Designed for sports/running'
+          'Designed for sports / running'
         ],
         whyNoticed: 'The earhook design is useful for active use — running, workouts and gym sessions — with a solid 4.0 rating.',
         considerations: 'Check the retailer listing for current price and availability.',
@@ -2011,37 +2187,17 @@
       }
     ];
 
-    /* ============================================================
-       STATE
-       ============================================================ */
-    let activeFilter = 'all';
-    let searchQuery = '';
+    var state = {
+      activeFilter: 'all',
+      searchQuery: '',
+      agentCurrentFind: null,
+      approvedFinds: []
+    };
 
-    /* ============================================================
-       UTILITIES
-       ============================================================ */
-    function isPlaceholder(url) {
-      if (!url) return true;
-      const trimmed = String(url).trim();
-      if (trimmed === '' || trimmed === '#') return true;
-      if (trimmed.indexOf('PASTE_') === 0) return true;
-      if (trimmed.indexOf('[') === 0) return true;
-      return false;
-    }
-
-    function isSafeUrl(url) {
-      if (!url) return false;
-      const trimmed = String(url).trim().toLowerCase();
-      return (
-        trimmed.indexOf('http://') === 0 ||
-        trimmed.indexOf('https://') === 0 ||
-        trimmed.indexOf('mailto:') === 0
-      );
-    }
-
-    function escapeHtml(str) {
-      if (str == null) return '';
-      return String(str)
+    /* ---------- UTILITIES ---------- */
+    function escapeHtml(value) {
+      if (value == null) return '';
+      return String(value)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -2049,126 +2205,159 @@
         .replace(/'/g, '&#39;');
     }
 
-    /* ============================================================
-       RENDER PRODUCTS
-       ============================================================ */
+    function isPlaceholderUrl(url) {
+      if (!url) return true;
+      var u = String(url).trim();
+      if (u === '' || u === '#') return true;
+      if (u.indexOf('PASTE_') === 0) return true;
+      if (u.indexOf('[') === 0) return true;
+      return false;
+    }
+
+    function safeStorageGet(key) {
+      try { return window.localStorage.getItem(key); }
+      catch (err) { return null; }
+    }
+
+    function safeStorageSet(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function readApprovedFinds() {
+      var raw = safeStorageGet('dealforgeApprovedFinds');
+      if (!raw) return [];
+      try {
+        var parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (err) {
+        return [];
+      }
+    }
+
+    function parseNumericPrice(priceStr) {
+      if (!priceStr || typeof priceStr !== 'string') return 0;
+      var cleaned = priceStr.replace(/[^0-9.]/g, '');
+      var value = Number(cleaned);
+      return isFinite(value) ? value : 0;
+    }
+
+    function formatNaira(value) {
+      if (!value || isNaN(value)) return 'Not provided';
+      try { return '₦' + Number(value).toLocaleString('en-NG'); }
+      catch (err) { return '₦' + Number(value); }
+    }
+
+    /* ---------- ANALYTICS HOOK (local only) ---------- */
+    var ANALYTICS_KEY = 'dealforgeEvents';
+    var ANALYTICS_MAX = 200;
+
+    function trackEvent(name, payload) {
+      try {
+        var raw = safeStorageGet(ANALYTICS_KEY);
+        var list = raw ? JSON.parse(raw) : [];
+        var arr = Array.isArray(list) ? list : [];
+        arr.push({ name: name, payload: payload || {}, ts: Date.now() });
+        while (arr.length > ANALYTICS_MAX) arr.shift();
+        safeStorageSet(ANALYTICS_KEY, JSON.stringify(arr));
+      } catch (err) { /* silent */ }
+    }
+
+    /* ---------- PRODUCT RENDERING ---------- */
+    function productMatchesQuery(product, query) {
+      if (!query) return true;
+      var haystack = [
+        product.name || '',
+        product.category || '',
+        product.description || '',
+        product.whyNoticed || '',
+        Array.isArray(product.features) ? product.features.join(' ') : ''
+      ].join(' ').toLowerCase();
+      return haystack.indexOf(query.toLowerCase()) !== -1;
+    }
+
+    function getFilteredProducts() {
+      var q = state.searchQuery.trim();
+      return PRODUCTS.filter(function (p) {
+        var matchesFilter = state.activeFilter === 'all' || p.category === state.activeFilter;
+        return matchesFilter && productMatchesQuery(p, q);
+      });
+    }
+
+    function buildCardHTML(product) {
+      var hasImage = product.image && !isPlaceholderUrl(product.image);
+      var imgHTML = hasImage
+        ? '<img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '" loading="lazy" decoding="async" width="400" height="400">'
+        : '<span class="card-image-placeholder" aria-hidden="true">' + escapeHtml(product.imageEmoji || '📦') + '</span>';
+
+      var badgeHTML = product.badge
+        ? '<span class="card-badge ' + escapeHtml(product.badgeClass || '') + '">' + escapeHtml(product.badge) + '</span>'
+        : '';
+
+      var ratingHTML = product.rating
+        ? '<div class="card-rating">' +
+            '<span class="stars" aria-hidden="true">★</span>' +
+            '<span>' + escapeHtml(product.rating) + '/5</span>' +
+            (product.ratingCount ? '<span>· ' + escapeHtml(product.ratingCount) + ' ratings</span>' : '') +
+          '</div>'
+        : '';
+
+      var priceHTML =
+        '<div class="card-prices">' +
+          '<span class="card-price-current">' + escapeHtml(product.price || 'Check price') + '</span>' +
+          (product.previousPrice ? '<span class="card-price-previous">' + escapeHtml(product.previousPrice) + '</span>' : '') +
+          (product.discount ? '<span class="card-discount">-' + escapeHtml(product.discount) + '</span>' : '') +
+        '</div>';
+
+      return (
+        '<article class="product-card" data-id="' + escapeHtml(product.id) + '" tabindex="0" role="button" aria-label="View details for ' + escapeHtml(product.name) + '">' +
+          '<div class="card-image-wrap">' + badgeHTML + imgHTML + '</div>' +
+          '<div class="card-body">' +
+            '<span class="card-category">' + escapeHtml(product.category) + '</span>' +
+            '<h3 class="card-title">' + escapeHtml(product.name) + '</h3>' +
+            ratingHTML +
+            priceHTML +
+            '<p class="card-desc">' + escapeHtml(product.description || '') + '</p>' +
+            '<button class="card-cta" type="button" data-id="' + escapeHtml(product.id) + '" aria-label="Check deal for ' + escapeHtml(product.name) + '">Check Deal →</button>' +
+          '</div>' +
+        '</article>'
+      );
+    }
+
     function renderProducts() {
-      const grid = document.getElementById('productGrid');
+      var grid = document.getElementById('productGrid');
       if (!grid) return;
 
-      const q = searchQuery.toLowerCase().trim();
+      var list = getFilteredProducts();
 
-      const filtered = products.filter(function (p) {
-        const matchesFilter = activeFilter === 'all' || p.category === activeFilter;
-        if (!matchesFilter) return false;
-        if (q === '') return true;
-
-        const haystack = [
-          p.name,
-          p.category,
-          p.description,
-          p.whyNoticed,
-          (p.features || []).join(' ')
-        ].join(' ').toLowerCase();
-
-        return haystack.indexOf(q) !== -1;
-      });
-
-      if (filtered.length === 0) {
+      if (list.length === 0) {
         grid.innerHTML =
           '<div class="empty-state">' +
-            '<strong>No products found</strong>' +
-            '<span>Try a different search or filter.</span>' +
+            '<strong>No products match your search</strong>' +
+            '<span>Try a different keyword or category.</span>' +
           '</div>';
         return;
       }
 
-      grid.innerHTML = filtered.map(function (product) {
-        const hasImage = product.image && !isPlaceholder(product.image);
-        const imgHtml = hasImage
-          ? '<img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '" loading="lazy" width="400" height="400">'
-          : '<span class="card-image-placeholder" aria-hidden="true">' + (product.imageEmoji || '📦') + '</span>';
-
-        const hasBadge = product.badge && String(product.badge).trim() !== '';
-        const badgeHtml = hasBadge
-          ? '<span class="card-badge ' + (product.badgeClass || '') + '">' + escapeHtml(product.badge) + '</span>'
-          : '';
-
-        const ratingHtml = product.rating
-          ? '<div class="card-rating">' +
-              '<span class="stars" aria-hidden="true">★</span>' +
-              '<span>' + escapeHtml(product.rating) + '/5</span>' +
-              (product.ratingCount ? '<span>· ' + escapeHtml(product.ratingCount) + ' ratings</span>' : '') +
-            '</div>'
-          : '';
-
-        const priceHtml =
-          '<div class="card-prices">' +
-            '<span class="card-price-current">' + escapeHtml(product.price) + '</span>' +
-            (product.previousPrice ? '<span class="card-price-previous">' + escapeHtml(product.previousPrice) + '</span>' : '') +
-            (product.discount ? '<span class="card-discount">-' + escapeHtml(product.discount) + '</span>' : '') +
-          '</div>';
-
-        return (
-          '<article class="product-card" data-id="' + escapeHtml(product.id) + '" tabindex="0" role="button" aria-label="View details for ' + escapeHtml(product.name) + '">' +
-            '<div class="card-image-wrap">' +
-              badgeHtml +
-              imgHtml +
-            '</div>' +
-            '<div class="card-body">' +
-              '<span class="card-category">' + escapeHtml(product.category) + '</span>' +
-              '<h3 class="card-title">' + escapeHtml(product.name) + '</h3>' +
-              ratingHtml +
-              priceHtml +
-              '<p class="card-desc">' + escapeHtml(product.description) + '</p>' +
-              '<button class="card-cta" data-id="' + escapeHtml(product.id) + '" aria-label="Check deal for ' + escapeHtml(product.name) + '">Check Deal →</button>' +
-            '</div>' +
-          '</article>'
-        );
-      }).join('');
-
-      grid.querySelectorAll('.product-card').forEach(function (card) {
-        card.addEventListener('click', function (e) {
-          if (e.target.closest('.card-cta')) return;
-          openProductModal(card.dataset.id);
-        });
-        card.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openProductModal(card.dataset.id);
-          }
-        });
-      });
-
-      grid.querySelectorAll('.card-cta').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          const product = products.find(function (p) { return p.id === btn.dataset.id; });
-          if (product && !isPlaceholder(product.affiliateUrl) && isSafeUrl(product.affiliateUrl)) {
-            window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer');
-          } else {
-            openProductModal(btn.dataset.id);
-          }
-        });
-      });
+      grid.innerHTML = list.map(buildCardHTML).join('');
     }
 
-    /* ============================================================
-       PRODUCT MODAL
-       ============================================================ */
-    function openProductModal(id) {
-      const product = products.find(function (p) { return p.id === id; });
-      if (!product) return;
+    /* ---------- PRODUCT MODAL ---------- */
+    var lastFocusedElement = null;
 
-      const modalBody = document.getElementById('modalBody');
-      const hasImage = product.image && !isPlaceholder(product.image);
-      const placeholder = isPlaceholder(product.affiliateUrl) || !isSafeUrl(product.affiliateUrl);
+    function buildModalHTML(product) {
+      var hasImage = product.image && !isPlaceholderUrl(product.image);
+      var placeholder = isPlaceholderUrl(product.affiliateUrl);
 
-      const imgHtml = hasImage
-        ? '<img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '" loading="lazy">'
-        : '<span aria-hidden="true">' + (product.imageEmoji || '📦') + '</span>';
+      var imgHTML = hasImage
+        ? '<img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '" loading="lazy" decoding="async">'
+        : '<span aria-hidden="true">' + escapeHtml(product.imageEmoji || '📦') + '</span>';
 
-      const ratingHtml = product.rating
+      var ratingHTML = product.rating
         ? '<div class="modal-rating">' +
             '<span class="stars" aria-hidden="true">★</span>' +
             '<span>' + escapeHtml(product.rating) + '/5</span>' +
@@ -2176,102 +2365,147 @@
           '</div>'
         : '';
 
-      const pricesHtml =
+      var pricesHTML =
         '<div class="modal-prices">' +
-          '<span class="modal-price-current">' + escapeHtml(product.price) + '</span>' +
+          '<span class="modal-price-current">' + escapeHtml(product.price || 'Check price') + '</span>' +
           (product.previousPrice ? '<span class="modal-price-previous">' + escapeHtml(product.previousPrice) + '</span>' : '') +
           (product.discount ? '<span class="modal-discount">-' + escapeHtml(product.discount) + '</span>' : '') +
         '</div>';
 
-      const featuresHtml = (product.features && product.features.length)
+      var featuresHTML = Array.isArray(product.features) && product.features.length
         ? '<div class="modal-section">' +
-            '<h4>Key Specifications</h4>' +
+            '<h4>Key specifications</h4>' +
             '<ul>' + product.features.map(function (f) { return '<li>' + escapeHtml(f) + '</li>'; }).join('') + '</ul>' +
           '</div>'
         : '';
 
-      const whyHtml = product.whyNoticed
-        ? '<div class="modal-section">' +
-            '<h4>Why we noticed it</h4>' +
-            '<p>' + escapeHtml(product.whyNoticed) + '</p>' +
-          '</div>'
+      var whyHTML = product.whyNoticed
+        ? '<div class="modal-section"><h4>Why we noticed it</h4><p>' + escapeHtml(product.whyNoticed) + '</p></div>'
         : '';
 
-      const considerHtml = product.considerations
-        ? '<div class="modal-section">' +
-            '<h4>Things to consider</h4>' +
-            '<p>' + escapeHtml(product.considerations) + '</p>' +
-          '</div>'
+      var considerHTML = product.considerations
+        ? '<div class="modal-section"><h4>Things to consider</h4><p>' + escapeHtml(product.considerations) + '</p></div>'
         : '';
 
-      const ctaHref = placeholder ? '#' : product.affiliateUrl;
-      const ctaTarget = placeholder ? '' : 'target="_blank" rel="noopener noreferrer"';
+      var ctaHref = placeholder ? '#' : product.affiliateUrl;
+      var ctaExtra = placeholder
+        ? 'data-placeholder="true" aria-disabled="true"'
+        : 'target="_blank" rel="noopener noreferrer" data-analytics-id="' + escapeHtml(product.id) + '"';
 
-      modalBody.innerHTML =
-        '<div class="modal-image">' + imgHtml + '</div>' +
-        '<div class="modal-category">' + escapeHtml(product.category) + '</div>' +
+      return (
+        '<div class="modal-image">' + imgHTML + '</div>' +
+        '<p class="modal-category">' + escapeHtml(product.category) + '</p>' +
         '<h2 class="modal-title" id="modalTitle">' + escapeHtml(product.name) + '</h2>' +
-        ratingHtml +
-        pricesHtml +
-        '<div class="modal-section">' +
-          '<h4>Description</h4>' +
-          '<p>' + escapeHtml(product.description) + '</p>' +
-        '</div>' +
-        featuresHtml +
-        whyHtml +
-        considerHtml +
-        '<a href="' + escapeHtml(ctaHref) + '" class="modal-cta" id="modalCta" ' + ctaTarget + '>View Deal →</a>' +
+        ratingHTML +
+        pricesHTML +
+        '<div class="modal-section"><h4>Description</h4><p>' + escapeHtml(product.description || '') + '</p></div>' +
+        featuresHTML +
+        whyHTML +
+        considerHTML +
+        '<a href="' + escapeHtml(ctaHref) + '" class="modal-cta" id="modalCta" ' + ctaExtra + '>View Deal →</a>' +
         '<p class="modal-disclaimer">' +
           'Prices, availability and product information can change. Check the retailer\'s page for the latest details. ' +
           'DealForge NG does not sell or fulfil this product. DealForge may earn a commission from qualifying purchases at no extra cost to you.' +
-        '</p>';
+        '</p>'
+      );
+    }
 
-      const modalCta = document.getElementById('modalCta');
-      if (modalCta && placeholder) {
-        modalCta.addEventListener('click', function (e) {
-          e.preventDefault();
-          alert('Retailer link coming soon.');
-        });
+    function openProductModal(productId) {
+      var product = PRODUCTS.find(function (p) { return p.id === productId; });
+      if (!product) return;
+
+      var overlay = document.getElementById('modalOverlay');
+      var body = document.getElementById('modalBody');
+      if (!overlay || !body) return;
+
+      lastFocusedElement = document.activeElement;
+      body.innerHTML = buildModalHTML(product);
+
+      overlay.hidden = false;
+      void overlay.offsetWidth;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+
+      var cta = document.getElementById('modalCta');
+      if (cta) {
+        if (cta.dataset.placeholder === 'true') {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            alert('Retailer link is not available yet for this product.');
+          });
+        } else {
+          cta.addEventListener('click', function () {
+            trackEvent('affiliate_click', { productId: product.id, source: 'modal' });
+          });
+        }
       }
 
-      document.getElementById('modalOverlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
+      var closeBtn = document.getElementById('modalClose');
+      if (closeBtn) setTimeout(function () { closeBtn.focus(); }, 60);
     }
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('open');
-      document.body.style.overflow = '';
+    function closeProductModal() {
+      var overlay = document.getElementById('modalOverlay');
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+
+      setTimeout(function () {
+        overlay.hidden = true;
+        var body = document.getElementById('modalBody');
+        if (body) body.innerHTML = '';
+      }, 300);
+
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        try { lastFocusedElement.focus(); } catch (err) {}
+      }
     }
 
-    /* ============================================================
-       SEARCH, FILTERS, CATEGORIES
-       ============================================================ */
-    function initSearch() {
-      const input = document.getElementById('searchInput');
-      if (!input) return;
-      let debounce;
-      input.addEventListener('input', function (e) {
-        clearTimeout(debounce);
-        const val = e.target.value;
-        debounce = setTimeout(function () {
-          searchQuery = val.trim();
-          renderProducts();
-        }, 180);
-      });
-    }
-
+    /* ---------- SEARCH & FILTERS ---------- */
     function setActiveFilter(filterValue) {
-      activeFilter = filterValue;
+      state.activeFilter = filterValue;
+
       document.querySelectorAll('.filter-chip').forEach(function (chip) {
-        chip.classList.toggle('active', chip.dataset.filter === filterValue);
+        var isActive = chip.dataset.filter === filterValue;
+        chip.classList.toggle('active', isActive);
+        chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
+
       renderProducts();
     }
 
-    function initFilters() {
+    function initSearch() {
+      var input = document.getElementById('searchInput');
+      var clearBtn = document.getElementById('searchClear');
+      if (!input) return;
+
+      var debounce;
+      input.addEventListener('input', function (e) {
+        if (clearBtn) clearBtn.hidden = e.target.value.trim() === '';
+        clearTimeout(debounce);
+        var value = e.target.value;
+        debounce = setTimeout(function () {
+          state.searchQuery = value.trim();
+          renderProducts();
+        }, 120);
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          input.value = '';
+          state.searchQuery = '';
+          clearBtn.hidden = true;
+          renderProducts();
+          input.focus();
+        });
+      }
+    }
+
+    function initFilterChips() {
       document.querySelectorAll('.filter-chip').forEach(function (chip) {
+        chip.setAttribute('aria-pressed', chip.classList.contains('active') ? 'true' : 'false');
         chip.addEventListener('click', function () {
-          setActiveFilter(chip.dataset.filter);
+          setActiveFilter(chip.dataset.filter || 'all');
         });
       });
     }
@@ -2279,233 +2513,354 @@
     function initCategoryCards() {
       document.querySelectorAll('.category-card').forEach(function (card) {
         card.addEventListener('click', function () {
-          const cat = card.dataset.category;
-          const chip = document.querySelector('.filter-chip[data-filter="' + cat + '"]');
-          if (chip) {
-            setActiveFilter(cat);
-            const deals = document.getElementById('deals');
-            if (deals) deals.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          var cat = card.dataset.category;
+          if (!cat) return;
+          setActiveFilter(cat);
+          var deals = document.getElementById('deals');
+          if (deals) deals.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       });
     }
 
-    /* ============================================================
-       MOBILE MENU
-       ============================================================ */
-    function initMobileMenu() {
-      const btn = document.getElementById('mobileMenuBtn');
-      const nav = document.getElementById('mobileNav');
-      if (!btn || !nav) return;
-
-      btn.addEventListener('click', function () {
-        const isOpen = nav.classList.toggle('open');
-        btn.classList.toggle('active');
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-
-      nav.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          nav.classList.remove('open');
-          btn.classList.remove('active');
-          btn.setAttribute('aria-expanded', 'false');
-        });
-      });
-    }
-
-    /* ============================================================
-       HEADER SHADOW
-       ============================================================ */
+    /* ---------- HEADER + MOBILE NAV ---------- */
     function initHeaderScroll() {
-      const header = document.getElementById('siteHeader');
+      var header = document.getElementById('siteHeader');
       if (!header) return;
-      const onScroll = function () {
+      var onScroll = function () {
         header.classList.toggle('scrolled', window.scrollY > 10);
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     }
 
-    /* ============================================================
-       MODAL EVENTS
-       ============================================================ */
-    function initModal() {
-      const overlay = document.getElementById('modalOverlay');
-      const closeBtn = document.getElementById('modalClose');
-      if (!overlay || !closeBtn) return;
+    function initMobileMenu() {
+      var btn = document.getElementById('mobileMenuBtn');
+      var nav = document.getElementById('mobileNav');
+      if (!btn || !nav) return;
 
-      closeBtn.addEventListener('click', closeModal);
-      overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) closeModal();
+      nav.hidden = false;
+
+      function closeMenu() {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open navigation menu');
+      }
+      function openMenu() {
+        nav.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Close navigation menu');
+      }
+
+      btn.addEventListener('click', function () {
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        if (isOpen) closeMenu(); else openMenu();
       });
+
+      nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!nav.classList.contains('open')) return;
+        if (nav.contains(e.target) || btn.contains(e.target)) return;
+        closeMenu();
       });
     }
 
-    /* ============================================================
-       EMAIL FORM (visual demo only)
-       ============================================================ */
+    /* ---------- MODAL EVENTS ---------- */
+    function initModalEvents() {
+      var overlay = document.getElementById('modalOverlay');
+      var closeBtn = document.getElementById('modalClose');
+      if (!overlay || !closeBtn) return;
+
+      closeBtn.addEventListener('click', closeProductModal);
+
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeProductModal();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeProductModal();
+      });
+
+      document.addEventListener('click', function (e) {
+        var card = e.target.closest('.product-card');
+        var cardCta = e.target.closest('.card-cta');
+
+        if (cardCta) {
+          e.stopPropagation();
+          var id = cardCta.dataset.id;
+          var product = PRODUCTS.find(function (p) { return p.id === id; });
+          if (!product) return;
+          if (isPlaceholderUrl(product.affiliateUrl)) {
+            openProductModal(id);
+          } else {
+            trackEvent('affiliate_click', { productId: id, source: 'card' });
+            window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer');
+          }
+          return;
+        }
+
+        if (card) {
+          openProductModal(card.dataset.id);
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        if (!e.target.closest) return;
+        var card = e.target.closest('.product-card');
+        if (!card) return;
+        if (e.target.closest('.card-cta')) return;
+        e.preventDefault();
+        openProductModal(card.dataset.id);
+      });
+    }
+
+    /* ---------- MOBILE BOTTOM NAV ---------- */
+    function initMobileBottomNav() {
+      var links = document.querySelectorAll('.mobile-bottom-nav a');
+      if (!links.length) return;
+
+      function setActive(nav) {
+        links.forEach(function (l) {
+          l.classList.toggle('active', l.dataset.nav === nav);
+        });
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function () {
+          setActive(link.dataset.nav);
+        });
+      });
+
+      if (!('IntersectionObserver' in window)) return;
+
+      var sections = [
+        { id: 'deals', nav: 'deals' },
+        { id: 'categories', nav: 'categories' },
+        { id: 'community', nav: 'community' }
+      ];
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var match = sections.find(function (s) { return s.id === entry.target.id; });
+          if (match) setActive(match.nav);
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+      sections.forEach(function (s) {
+        var el = document.getElementById(s.id);
+        if (el) observer.observe(el);
+      });
+    }
+
+    /* ---------- EMAIL FORM (demo only) ---------- */
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    }
+
     function initEmailForm() {
-      const form = document.getElementById('emailForm');
-      const btn = document.getElementById('notifyBtn');
-      const input = document.getElementById('emailInput');
-      if (!form || !btn || !input) return;
+      var form = document.getElementById('emailForm');
+      var btn = document.getElementById('notifyBtn');
+      var input = document.getElementById('emailInput');
+      var note = document.getElementById('emailNote');
+      if (!form || !btn || !input || !note) return;
+
+      var submitting = false;
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (!input.value.trim()) {
+        if (submitting) return;
+
+        var value = input.value.trim();
+
+        if (!value) {
+          note.textContent = 'Please enter an email address.';
+          note.className = 'email-note error';
           input.focus();
           return;
         }
-        const original = btn.textContent;
+
+        if (!isValidEmail(value)) {
+          note.textContent = 'Please enter a valid email address.';
+          note.className = 'email-note error';
+          input.focus();
+          return;
+        }
+
+        submitting = true;
+        btn.disabled = true;
+        var original = btn.textContent;
         btn.textContent = '✓ Noted!';
         btn.style.background = '#10B981';
-        btn.disabled = true;
+        note.textContent = 'Thanks — noted. Email collection is not connected yet (demo only).';
+        note.className = 'email-note success';
+
+        trackEvent('email_signup_demo', { value: 'redacted' });
+
         setTimeout(function () {
           btn.textContent = original;
           btn.style.background = '';
           btn.disabled = false;
           input.value = '';
-        }, 2000);
+          submitting = false;
+          note.textContent = 'Demo only — email collection is not connected yet.';
+          note.className = 'email-note';
+        }, 2600);
       });
     }
 
-    /* ============================================================
-       MOBILE BOTTOM NAV
-       ============================================================ */
-    function initMobileBottomNav() {
-      const links = document.querySelectorAll('.mobile-bottom-nav a');
-      if (!links.length) return;
-      links.forEach(function (link) {
-        link.addEventListener('click', function () {
-          links.forEach(function (l) { l.classList.remove('active'); });
-          link.classList.add('active');
-        });
+    /* ---------- DEALFORGE AGENT ---------- */
+    var HIGH_INTEREST_KEYWORDS = [
+      'earbuds', 'headphones', 'power bank', 'charger', 'tripod',
+      'phone', 'keyboard', 'mouse', 'speaker', 'watch',
+      'projector', 'gaming', 'led', 'smart', 'camera', 'light'
+    ];
+
+    function findMatchingProduct(term) {
+      if (!term) return null;
+      var lower = term.toLowerCase();
+      return PRODUCTS.find(function (p) {
+        var pn = (p.name || '').toLowerCase();
+        return pn.indexOf(lower) !== -1 || lower.indexOf(pn) !== -1;
+      }) || null;
+    }
+
+    function scoreContentPotential(term, category) {
+      var t = (term || '').toLowerCase();
+      var c = (category || '').toLowerCase();
+      var hits = 0;
+      HIGH_INTEREST_KEYWORDS.forEach(function (w) {
+        if (t.indexOf(w) !== -1) hits++;
       });
+      if (c.indexOf('trending') !== -1) hits += 1;
+      if (c.indexOf('audio') !== -1 || c.indexOf('gadget') !== -1) hits += 1;
+      if (hits >= 3) return { label: 'High', points: 12 };
+      if (hits >= 1) return { label: 'Medium', points: 6 };
+      return { label: 'Low', points: 0 };
     }
 
-    /* ============================================================
-       DEALFORGE AGENT V1
-       ============================================================ */
+    function runAgentScoring(input) {
+      var score = 40;
+      var notes = [];
 
-    /* Safe localStorage access — works even in private mode */
-    function safeGetApproved() {
-      try {
-        const raw = localStorage.getItem('dealforgeApprovedFinds');
-        if (!raw) return [];
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (err) {
-        return [];
-      }
-    }
-
-    function safeSetApproved(list) {
-      try {
-        localStorage.setItem('dealforgeApprovedFinds', JSON.stringify(list));
-        return true;
-      } catch (err) {
-        return false;
-      }
-    }
-
-    const agentState = {
-      currentFind: null,
-      approvedFinds: safeGetApproved()
-    };
-
-    function calculateDealScore(data) {
-      let score = 50;
-
-      /* Budget */
-      if (data.budget && data.price) {
-        if (data.price <= data.budget) {
-          score += 15;
-        } else if (data.price <= data.budget * 1.1) {
-          score += 7;
+      /* Budget fit */
+      var budgetFit = 'Not provided';
+      if (input.budget > 0 && input.price > 0) {
+        if (input.price <= input.budget) {
+          score += 20;
+          budgetFit = 'Within budget';
+        } else if (input.price <= input.budget * 1.1) {
+          score += 10;
+          budgetFit = 'Slightly over';
+          notes.push('Price is slightly above the stated budget.');
         } else {
           score -= 10;
+          budgetFit = 'Over budget';
+          notes.push('Price is above the stated budget.');
         }
+      } else if (input.budget > 0 && input.price === 0) {
+        budgetFit = 'Needs verification';
+        notes.push('No price available to compare against the budget.');
       }
 
       /* Rating */
-      if (data.rating >= 4.5) {
-        score += 15;
-      } else if (data.rating >= 4) {
-        score += 10;
-      } else if (data.rating >= 3.5) {
-        score += 5;
-      } else if (data.rating > 0 && data.rating < 3) {
-        score -= 10;
+      var ratingLabel = 'Not provided';
+      if (input.rating > 0) {
+        if (input.rating >= 4.5) { score += 18; ratingLabel = input.rating + ' ★ Excellent'; }
+        else if (input.rating >= 4) { score += 12; ratingLabel = input.rating + ' ★ Strong'; }
+        else if (input.rating >= 3.5) { score += 6; ratingLabel = input.rating + ' ★ Decent'; }
+        else if (input.rating >= 3) { score += 2; ratingLabel = input.rating + ' ★ OK'; }
+        else { score -= 8; ratingLabel = input.rating + ' ★ Low'; notes.push('Rating below 3.0 — verify carefully.'); }
+      } else {
+        ratingLabel = 'Needs verification';
       }
 
-      /* Product/content potential */
-      const product = String(data.product || '').toLowerCase();
-
-      const highInterestWords = [
-        'earbuds',
-        'headphones',
-        'power bank',
-        'charger',
-        'tripod',
-        'phone',
-        'keyboard',
-        'mouse',
-        'speaker',
-        'watch',
-        'projector',
-        'gaming',
-        'led',
-        'smart'
-      ];
-
-      highInterestWords.forEach(function (word) {
-        if (product.indexOf(word) !== -1) {
-          score += 3;
+      /* Minimum rating gate */
+      if (input.minRating > 0) {
+        if (input.rating > 0 && input.rating < input.minRating) {
+          score -= 15;
+          notes.push('Product rating is below your minimum requirement.');
+        } else if (input.rating === 0) {
+          notes.push('No rating available to compare against your minimum.');
         }
-      });
+      }
 
-      return Math.max(0, Math.min(100, Math.round(score)));
+      /* Content potential */
+      var cp = scoreContentPotential(input.product, input.category);
+      score += cp.points;
+
+      /* Affiliate availability */
+      var affiliateLabel = 'Not provided';
+      if (input.affiliateUrl) {
+        try {
+          var u = new URL(input.affiliateUrl);
+          if (u.protocol === 'http:' || u.protocol === 'https:') {
+            score += 8;
+            affiliateLabel = 'Provided';
+          } else {
+            affiliateLabel = 'Invalid format';
+            notes.push('Affiliate link is not a standard http(s) URL.');
+          }
+        } catch (err) {
+          affiliateLabel = 'Invalid format';
+          notes.push('Affiliate link could not be parsed.');
+        }
+      }
+
+      /* Category relevance */
+      if (input.category) {
+        var cat = input.category.toLowerCase();
+        if (cat.indexOf('trending') !== -1 || cat.indexOf('smart') !== -1) score += 5;
+        if (cat.indexOf('tech') !== -1 || cat.indexOf('audio') !== -1) score += 3;
+      }
+
+      score = Math.max(0, Math.min(100, Math.round(score)));
+
+      return {
+        score: score,
+        budgetFit: budgetFit,
+        ratingLabel: ratingLabel,
+        contentLabel: cp.label,
+        affiliateLabel: affiliateLabel,
+        notes: notes
+      };
     }
 
-    function getVerdict(score) {
-      if (score >= 85) {
-        return '<strong>🔥 Strong find.</strong> This has several signals that make it worth investigating further before publishing.';
-      }
-      if (score >= 70) {
-        return '<strong>💡 Promising find.</strong> There is enough potential here for DealForge to consider creating content around it.';
-      }
-      if (score >= 55) {
-        return '<strong>👀 Worth checking.</strong> The product has some potential, but more verification is recommended.';
-      }
-      return '<strong>⚠️ Weak opportunity.</strong> The available information does not currently provide a strong enough reason to highlight it.';
+    function agentVerdict(score) {
+      if (score >= 85) return '<strong>🔥 Strong find.</strong> Several signals line up here — worth investigating further before publishing.';
+      if (score >= 70) return '<strong>💡 Promising find.</strong> Enough potential to consider a DealForge post.';
+      if (score >= 55) return '<strong>👀 Worth checking.</strong> Some potential, but more verification is recommended.';
+      return '<strong>⚠️ Weak signal.</strong> Based on the information provided, this does not look strong enough to highlight yet.';
     }
 
-    function generateTikTok(product, category, score) {
-      const hooks = [
+    function pickTikTokHook() {
+      var hooks = [
         'Would you actually buy this?',
-        'I found something you might want to see.',
-        'This might be one of those surprisingly useful finds.',
+        'I found something worth a closer look.',
         'Before you spend money on this, check this out.',
         'This product caught my attention for one reason.',
         'Is this actually worth the money?'
       ];
+      return hooks[Math.floor(Math.random() * hooks.length)];
+    }
 
-      const hook = hooks[Math.floor(Math.random() * hooks.length)];
-
+    function generateTikTok(product, category, score, notes) {
+      var reason = notes.length ? notes[0] : 'It caught DealForge\'s attention based on the details provided.';
       return (
-        hook +
-        '\n\n' +
-        'Product: ' + product +
-        '\n' +
-        'Category: ' + category +
-        '\n\n' +
-        'DealForge score: ' + score + '/100.' +
-        '\n\n' +
-        'We found it. We checked the available information. ' +
-        'Now you decide if it is worth checking out.' +
-        '\n\n' +
+        pickTikTokHook() + '\n\n' +
+        'Product: ' + product + '\n' +
+        'Category: ' + category + '\n\n' +
+        'DealForge score: ' + score + '/100.\n' +
+        'Why it caught our eye: ' + reason + '\n\n' +
+        'We find it. You decide.\n' +
+        'Check the retailer listing for the latest price and availability.\n\n' +
         '#DealForgeNG #DealsNigeria #TechFinds #SmartFinds'
       );
     }
@@ -2513,246 +2868,228 @@
     function generateWhatsApp(product, category, score) {
       return (
         '🔥 DEALFORGE FIND\n\n' +
-        product +
-        '\n\n' +
-        'Category: ' + category +
-        '\n' +
+        product + '\n' +
+        'Category: ' + category + '\n' +
         'DealForge score: ' + score + '/100\n\n' +
-        'Why we noticed it:\n' +
-        'A potentially interesting ' + category.toLowerCase() +
-        ' find worth checking out.\n\n' +
         '💡 We find it. You decide.\n\n' +
-        'Always confirm the current price, availability and product details before buying.'
+        'Always confirm current price, availability and product details on the retailer\'s page before buying.'
       );
     }
 
+    function resetAgentOutput() {
+      var map = {
+        agentResultName: '—',
+        agentScore: '—',
+        metricBudget: '—',
+        metricRating: '—',
+        metricContent: '—',
+        metricAffiliate: '—'
+      };
+      Object.keys(map).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = map[id];
+      });
+      var verdict = document.getElementById('agentVerdict');
+      if (verdict) verdict.textContent = '—';
+      var tt = document.getElementById('agentTikTok');
+      if (tt) tt.textContent = '—';
+      var wa = document.getElementById('agentWhatsApp');
+      if (wa) wa.textContent = '—';
+    }
+
+    function setAgentStatus(message) {
+      var el = document.getElementById('agentStatus');
+      if (el) el.textContent = message;
+    }
+
     function runDealForgeAgent() {
-      const productInput = document.getElementById('agentProduct');
-      const budgetInput = document.getElementById('agentBudget');
-      const ratingInput = document.getElementById('agentRating');
-      const categoryInput = document.getElementById('agentCategory');
-      const affiliateInput = document.getElementById('agentAffiliate');
+      var productInput = document.getElementById('agentProduct');
+      var budgetInput = document.getElementById('agentBudget');
+      var ratingInput = document.getElementById('agentRating');
+      var categoryInput = document.getElementById('agentCategory');
+      var affiliateInput = document.getElementById('agentAffiliate');
+      var button = document.getElementById('runAgentBtn');
+      var results = document.getElementById('agentResults');
+      var empty = document.getElementById('agentEmptyState');
+      var approved = document.getElementById('agentApproved');
 
-      const status = document.getElementById('agentStatus');
-      const button = document.getElementById('runAgentBtn');
+      if (!productInput || !button) return;
 
-      const product = productInput.value.trim();
-      const budget = Number(budgetInput.value) || 0;
-      const minimumRating = Number(ratingInput.value) || 0;
-      const category = categoryInput.value;
-      const affiliateUrl = affiliateInput.value.trim();
+      var product = productInput.value.trim();
+      var budget = Number(budgetInput ? budgetInput.value : 0) || 0;
+      var minRating = Number(ratingInput ? ratingInput.value : 0) || 0;
+      var category = categoryInput ? categoryInput.value : 'Tech & Gadgets';
+      var affiliateUrl = affiliateInput ? affiliateInput.value.trim() : '';
 
       if (!product) {
         productInput.focus();
-        status.textContent = 'Enter a product first.';
+        setAgentStatus('Enter a product first.');
         return;
       }
 
       button.disabled = true;
       button.textContent = '⏳ Analyzing...';
-      status.textContent = 'DealForge Agent is analyzing the find...';
+      setAgentStatus('Running local analysis...');
 
       setTimeout(function () {
-        /* Try to find a matching existing product */
-        const lowerProduct = product.toLowerCase();
-        const matchingProduct = products.find(function (p) {
-          const name = p.name.toLowerCase();
-          return name.indexOf(lowerProduct) !== -1 || lowerProduct.indexOf(name) !== -1;
-        });
+        var match = findMatchingProduct(product);
 
-        let price = 0;
-        let rating = minimumRating;
+        var price = 0;
+        var rating = minRating || 0;
 
-        if (matchingProduct) {
-          /* Extract numeric price if available */
-          const numericPrice = String(matchingProduct.price).replace(/[^\d.]/g, '');
-          const parsed = Number(numericPrice);
-          if (!isNaN(parsed) && parsed > 0) {
-            price = parsed;
-          }
-          /* Use matching product rating if higher than min */
-          if (matchingProduct.rating) {
-            const r = Number(matchingProduct.rating);
-            if (!isNaN(r) && r > rating) {
-              rating = r;
-            }
-          }
+        if (match) {
+          price = parseNumericPrice(match.price);
+          var r = Number(match.rating);
+          if (isFinite(r) && r > 0) rating = r;
         }
 
-        const score = calculateDealScore({
+        var analysis = runAgentScoring({
           product: product,
+          category: category,
           budget: budget,
           price: price,
-          rating: rating
+          rating: rating,
+          minRating: minRating,
+          affiliateUrl: affiliateUrl
         });
 
-        const verdict = getVerdict(score);
-        const tiktok = generateTikTok(product, category, score);
-        const whatsapp = generateWhatsApp(product, category, score);
+        var verdictHTML = agentVerdict(analysis.score);
+        var tiktok = generateTikTok(product, category, analysis.score, analysis.notes);
+        var whatsapp = generateWhatsApp(product, category, analysis.score);
 
-        /* Save current find */
-        agentState.currentFind = {
+        var nameEl = document.getElementById('agentResultName');
+        var scoreEl = document.getElementById('agentScore');
+        var verdictEl = document.getElementById('agentVerdict');
+        var budgetEl = document.getElementById('metricBudget');
+        var ratingEl = document.getElementById('metricRating');
+        var contentEl = document.getElementById('metricContent');
+        var affEl = document.getElementById('metricAffiliate');
+        var tiktokEl = document.getElementById('agentTikTok');
+        var waEl = document.getElementById('agentWhatsApp');
+
+        if (nameEl) nameEl.textContent = product;
+        if (scoreEl) scoreEl.textContent = String(analysis.score);
+        if (verdictEl) verdictEl.innerHTML = verdictHTML;
+        if (budgetEl) budgetEl.textContent = analysis.budgetFit;
+        if (ratingEl) ratingEl.textContent = analysis.ratingLabel;
+        if (contentEl) contentEl.textContent = analysis.contentLabel;
+        if (affEl) affEl.textContent = analysis.affiliateLabel;
+        if (tiktokEl) tiktokEl.textContent = tiktok;
+        if (waEl) waEl.textContent = whatsapp;
+
+        if (results) results.hidden = false;
+        if (empty) empty.style.display = 'none';
+        if (approved) approved.hidden = true;
+
+        state.agentCurrentFind = {
           id: 'agent-' + Date.now(),
           product: product,
           category: category,
           budget: budget,
           price: price,
           rating: rating,
-          score: score,
+          score: analysis.score,
           affiliateUrl: affiliateUrl,
           tiktok: tiktok,
           whatsapp: whatsapp,
           createdAt: new Date().toISOString()
         };
 
-        /* Update UI */
-        document.getElementById('agentResultName').textContent = product;
-        document.getElementById('agentScore').textContent = score;
-        document.getElementById('agentVerdict').innerHTML = verdict;
-
-        document.getElementById('metricUsefulness').textContent =
-          score >= 75 ? 'High' :
-          score >= 55 ? 'Medium' : 'Low';
-
-        /* Value metric — properly reflects when we DO know price */
-        let valueLabel;
-        if (price > 0 && budget > 0) {
-          if (price <= budget) {
-            valueLabel = 'Within budget';
-          } else if (price <= budget * 1.1) {
-            valueLabel = 'Slightly over';
-          } else {
-            valueLabel = 'Over budget';
-          }
-        } else if (price > 0) {
-          valueLabel = 'No budget set';
-        } else {
-          valueLabel = 'Needs price check';
-        }
-        document.getElementById('metricValue').textContent = valueLabel;
-
-        document.getElementById('metricContent').textContent =
-          score >= 70 ? 'High' :
-          score >= 55 ? 'Medium' : 'Low';
-
-        document.getElementById('metricRisk').textContent =
-          score >= 75 ? 'Low–Med' :
-          score >= 55 ? 'Medium' : 'Higher';
-
-        document.getElementById('agentTikTok').textContent = tiktok;
-        document.getElementById('agentWhatsApp').textContent = whatsapp;
-
-        document.getElementById('agentResults').classList.add('visible');
-        document.getElementById('agentEmptyState').style.display = 'none';
-        document.getElementById('agentApproved').classList.remove('show');
-
         button.disabled = false;
         button.textContent = '⚡ Analyze Again';
-        status.textContent = 'Analysis complete. Review the result before publishing.';
-      }, 700);
+        setAgentStatus('Analysis complete. Review before publishing.');
+
+        trackEvent('agent_run', { score: analysis.score });
+      }, 600);
+    }
+
+    function fallbackCopy(element) {
+      try {
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        var ok = document.execCommand('copy');
+        sel.removeAllRanges();
+        return ok;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function showCopied(button) {
+      var original = button.textContent;
+      button.textContent = '✓ Copied!';
+      setTimeout(function () { button.textContent = original; }, 1500);
     }
 
     function copyAgentText(elementId, buttonId) {
-      const element = document.getElementById(elementId);
-      const button = document.getElementById(buttonId);
-      if (!element || !button) return;
+      var el = document.getElementById(elementId);
+      var btn = document.getElementById(buttonId);
+      if (!el || !btn) return;
 
-      const text = element.textContent;
+      var text = el.textContent;
 
-      /* Preferred: clipboard API */
-      if (navigator.clipboard && navigator.clipboard.writeText) {
+      if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(function () {
-          const original = button.textContent;
-          button.textContent = '✓ Copied!';
-          setTimeout(function () { button.textContent = original; }, 1500);
+          showCopied(btn);
         }).catch(function () {
-          fallbackCopy(text, button);
+          if (fallbackCopy(el)) showCopied(btn);
+          else alert('Copy failed. Please select the text manually.');
         });
-        return;
-      }
-
-      fallbackCopy(text, button);
-    }
-
-    /* Fallback for old browsers / insecure contexts */
-    function fallbackCopy(text, button) {
-      try {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'absolute';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-
-        const original = button.textContent;
-        button.textContent = '✓ Copied!';
-        setTimeout(function () { button.textContent = original; }, 1500);
-      } catch (err) {
-        alert('Copy failed. Please select the text manually.');
+      } else {
+        if (fallbackCopy(el)) showCopied(btn);
+        else alert('Copy failed. Please select the text manually.');
       }
     }
 
     function approveAgentFind() {
-      if (!agentState.currentFind) {
-        document.getElementById('agentStatus').textContent =
-          'Run an analysis first.';
-        return;
-      }
+      if (!state.agentCurrentFind) return;
 
-      const existingIndex = agentState.approvedFinds.findIndex(function (item) {
-        return item.id === agentState.currentFind.id;
+      var existing = state.approvedFinds.findIndex(function (item) {
+        return item && item.id === state.agentCurrentFind.id;
       });
 
-      if (existingIndex === -1) {
-        agentState.approvedFinds.push(agentState.currentFind);
+      if (existing === -1) state.approvedFinds.push(state.agentCurrentFind);
+      else state.approvedFinds[existing] = state.agentCurrentFind;
+
+      var ok = safeStorageSet('dealforgeApprovedFinds', JSON.stringify(state.approvedFinds));
+      var approved = document.getElementById('agentApproved');
+
+      if (approved) {
+        approved.hidden = false;
+        approved.textContent = ok
+          ? '✓ Saved in this browser.'
+          : '⚠ Could not save — browser storage is unavailable.';
       }
 
-      const ok = safeSetApproved(agentState.approvedFinds);
-
-      const approvedEl = document.getElementById('agentApproved');
-      approvedEl.classList.add('show');
-
-      if (ok) {
-        document.getElementById('agentStatus').textContent =
-          'Find approved and saved locally.';
-      } else {
-        approvedEl.textContent = '✓ Find approved (session only — storage unavailable).';
-        document.getElementById('agentStatus').textContent =
-          'Saved in this session only (browser storage unavailable).';
-      }
+      setAgentStatus(ok ? 'Saved in this browser.' : 'Could not save locally.');
+      trackEvent('agent_approve', { score: state.agentCurrentFind.score });
     }
 
     function initDealForgeAgent() {
-      const runButton = document.getElementById('runAgentBtn');
-      if (!runButton) return;
+      var runBtn = document.getElementById('runAgentBtn');
+      if (!runBtn) return;
 
-      runButton.addEventListener('click', runDealForgeAgent);
+      runBtn.addEventListener('click', runDealForgeAgent);
 
-      const copyTikTokBtn = document.getElementById('copyTikTok');
-      if (copyTikTokBtn) {
-        copyTikTokBtn.addEventListener('click', function () {
-          copyAgentText('agentTikTok', 'copyTikTok');
-        });
-      }
+      var copyTikTok = document.getElementById('copyTikTok');
+      if (copyTikTok) copyTikTok.addEventListener('click', function () {
+        copyAgentText('agentTikTok', 'copyTikTok');
+      });
 
-      const copyWhatsAppBtn = document.getElementById('copyWhatsApp');
-      if (copyWhatsAppBtn) {
-        copyWhatsAppBtn.addEventListener('click', function () {
-          copyAgentText('agentWhatsApp', 'copyWhatsApp');
-        });
-      }
+      var copyWhatsApp = document.getElementById('copyWhatsApp');
+      if (copyWhatsApp) copyWhatsApp.addEventListener('click', function () {
+        copyAgentText('agentWhatsApp', 'copyWhatsApp');
+      });
 
-      const approveBtn = document.getElementById('approveDeal');
-      if (approveBtn) {
-        approveBtn.addEventListener('click', approveAgentFind);
-      }
+      var approve = document.getElementById('approveDeal');
+      if (approve) approve.addEventListener('click', approveAgentFind);
 
-      const productInput = document.getElementById('agentProduct');
-      if (productInput) {
-        productInput.addEventListener('keydown', function (e) {
+      var productField = document.getElementById('agentProduct');
+      if (productField) {
+        productField.addEventListener('keydown', function (e) {
           if (e.key === 'Enter') {
             e.preventDefault();
             runDealForgeAgent();
@@ -2761,21 +3098,36 @@
       }
     }
 
-    /* ============================================================
-       INIT
-       ============================================================ */
-    document.addEventListener('DOMContentLoaded', function () {
+    /* ---------- FOOTER YEAR ---------- */
+    function initFooterYear() {
+      var el = document.getElementById('year');
+      if (el) el.textContent = String(new Date().getFullYear());
+    }
+
+    /* ---------- INIT ---------- */
+    function init() {
+      state.approvedFinds = readApprovedFinds();
+
       renderProducts();
       initSearch();
-      initFilters();
+      initFilterChips();
       initCategoryCards();
-      initMobileMenu();
       initHeaderScroll();
-      initModal();
-      initEmailForm();
+      initMobileMenu();
+      initModalEvents();
       initMobileBottomNav();
+      initEmailForm();
       initDealForgeAgent();
-    });
+      initFooterYear();
+
+      resetAgentOutput();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   </script>
 </body>
 </html>
